@@ -41,7 +41,11 @@ hr {
 }
 
 img {
+    padding:5px;
     vertical-align: middle;
+}
+img.expanded {
+    max-width: none;
 }
 
 fieldset {
