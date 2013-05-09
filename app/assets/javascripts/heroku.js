@@ -107,9 +107,9 @@ function handledown() {
                 dy = down.y - wasdown.y;
             var dirx = Math.abs(dy) < Math.abs(dx) //(dx,dy) is on a bowtie
             if (dx < -movethresh && dirx) {
-                Controls.left()
+                left()
             } else if (dx > movethresh && dirx) {
-                Controls.right()
+                right()
             }
             if (dy > movethresh && !dirx) {
                 if (davg > overthresh) {

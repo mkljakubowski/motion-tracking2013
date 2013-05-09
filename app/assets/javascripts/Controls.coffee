@@ -29,9 +29,9 @@ class Controls
     else if e.keyCode == 40
       Controls.down()
     else if e.keyCode == 37
-      Controls.left()
+      left()
     else if e.keyCode == 39
-      Controls.right()
+      right()
     else if e.keyCode == 27
       Controls.clear()
     else
