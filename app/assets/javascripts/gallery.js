@@ -46,12 +46,12 @@ function loadImages() {
 }
 
 function right() {
-      if(current<max){
-          var highlightContainer = document.getElementById("thePicture");
-          current++;
-          var tmpImage = document.getElementById("thePicture");
-          tmpImage.setAttribute("src", images[current]);
-      }
+    if(current<max){
+        var highlightContainer = document.getElementById("thePicture");
+        current++;
+        var tmpImage = document.getElementById("thePicture");
+        tmpImage.setAttribute("src", images[current]);
+    }
 }
 
 function left() {
@@ -61,3 +61,16 @@ function left() {
         tmpImage.setAttribute("src", images[current]);
     }
 }
+
+$(document).ready(function () {
+    $.getJSON('images', function (data) {
+        var items = [];
+
+        $.each(data, function (key, val) {
+            items.push('<a href="' + val + '"><img src="' + val + '" alt="some_text" width="250" height="250"/> </a>');
+        });
+
+        $("#gallery").html(items.join(''));
+
+    });
+});
