@@ -39,7 +39,6 @@ function hough(image){
             } else {
                 accum[thetaIndex][rho]++;
             }
-
         }
     }
 

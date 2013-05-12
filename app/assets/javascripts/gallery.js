@@ -4,10 +4,9 @@ var max=4;
 
 function loadImages() {
     var highlightContainer = document.getElementById("highlight");
-
     var imageContainer = document.getElementById("list");
 
-    images=new Array();
+    images=[];
     images[0] = "/assets/images/pic1.jpg";
     images[1] = "/assets/images/pic2.jpg";
     images[2] = "/assets/images/pic3.jpg";
@@ -27,7 +26,6 @@ function loadImages() {
         newImage.setAttribute("width", "200px");
         newImage.setAttribute("height", "200px");
 
-
 //        newImage.onclick = function() {
 //            console.log("clicked!");
 //            var tmpImage = document.createElement("img");
@@ -38,7 +36,6 @@ function loadImages() {
 //            $('#highlight').empty();
 //            highlightContainer.appendChild(tmpImage);
 //        };
-
 
         imageContainer.appendChild(newImage);
     }
@@ -73,4 +70,5 @@ $(document).ready(function () {
         $("#gallery").html(items.join(''));
 
     });
+    loadImages();
 });

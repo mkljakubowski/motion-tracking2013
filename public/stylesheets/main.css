@@ -19,7 +19,6 @@ body {
     line-height: 1.4;
     text-align:center;
     font-weight: bold;
-    text-align:center;
 }
 ::-moz-selection {
     background: #b3d4fc;
@@ -42,7 +41,6 @@ hr {
 
 img {
     padding:5px;
-    vertical-align: middle;
 }
 img.expanded {
     max-width: none;
@@ -104,6 +102,16 @@ textarea {
     opacity: 0.1;
 }
 
+.thumb {
+    height: 200px;
+}
+
+#listOfThumbs {
+    display: table;
+}
+
+#strip {
+}
 /* ==========================================================================
    Media Queries
    ========================================================================== */

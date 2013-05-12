@@ -29,12 +29,10 @@ class Controls
     else if e.keyCode == 40
       Controls.down()
     else if e.keyCode == 37
-      left()
+      Controls.left()
     else if e.keyCode == 39
-      right()
+      Controls.right()
     else if e.keyCode == 27
       Controls.clear()
-    else
-      console.log(e)
 
 new Controls() #to invoke constructor
