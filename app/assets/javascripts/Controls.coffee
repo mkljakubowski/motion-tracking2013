@@ -4,22 +4,24 @@ class Controls
     $(document).keydown(Controls.handleKeys)
 
   @left: ->
-    $("#arrows").html(" &larr;");
+    gallery.prev()
+#    $("#arrows").html(" &larr;");
 
   @right: ->
-    $("#arrows").html(" &rarr;");
+    gallery.next()
+#    $("#arrows").html(" &rarr;");
 
   @down: ->
-    $("#arrows").html(" &darr;");
+#    $("#arrows").html(" &darr;");
 
   @up: ->
-    $("#arrows").html(" &uarr;");
+#    $("#arrows").html(" &uarr;");
 
   @clear: ->
-    $("#arrows").html("");
+#    $("#arrows").html("");
 
   @steady: ->
-    $("#arrows").html("&middot;");
+#    $("#arrows").html("&middot;");
 
   @handleKeys: (e) ->
     e = e || window.event
