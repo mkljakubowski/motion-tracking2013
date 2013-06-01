@@ -59,9 +59,7 @@
       
       if (this.video.readyState === this.video.HAVE_ENOUGH_DATA){
         image = this.snapshot();
-        
         candidate = this.tracker.detect(image);
-        
         this.draw(candidate);
       }
     };
