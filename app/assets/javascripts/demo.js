@@ -55,50 +55,14 @@ DEMO.prototype.snapshot = function(){
 
 DEMO.prototype.draw = function(candidate){
     if(candidate){
-        var newAvg = {x:0, y:0};
-        for(var i = 0 ; i < candidate.contour.length ; i++){
-            newAvg.x += candidate.contour[i].x;
-            newAvg.y += candidate.contour[i].y;
-        }
-        newAvg.x /= candidate.contour.length;
-        newAvg.y /= candidate.contour.length;
-        this.drawHull(candidate.hull, "red");
+        this.context.putImageData(
+        this.createImage(this.tracker.mask, this.image),
+        this.canvas.width - this.image.width,
+        this.canvas.height - this.image.height);
+
     }
 };
 
-DEMO.prototype.drawHull = function(hull, color){
-    var len = hull.length, i = 1;
-
-    if (len > 0){
-        this.context.beginPath();
-        this.context.strokeStyle = color;
-
-        this.context.moveTo(hull[0].x, hull[0].y);
-        for (; i < len; ++ i){
-            this.context.lineTo(hull[i].x, hull[i].y);
-        }
-
-        this.context.stroke();
-        this.context.closePath();
-    }
-};
-
-DEMO.prototype.drawDefects = function(defects, color){
-    var len = defects.length, i = 0, point;
-
-    if (len > 0){
-        this.context.beginPath();
-        this.context.strokeStyle = color;
-
-        for (; i < len; ++ i){
-            point = defects[i].depthPoint;
-            this.context.strokeRect(point.x - 2, point.y - 2, 4, 4);
-        }
-
-        this.context.stroke();
-        this.context.closePath();
-    }
-};
 
 DEMO.prototype.createImage = function(imageSrc, imageDst){
     var src = imageSrc.data, dst = imageDst.data,
