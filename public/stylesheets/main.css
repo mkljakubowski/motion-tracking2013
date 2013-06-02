@@ -67,7 +67,7 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-#canvas {
+.flip {
     -moz-transform: scale(1, -1);
     -webkit-transform: scale(1, -1);
     -o-transform: scale(1, -1);
@@ -75,50 +75,16 @@ textarea {
     filter: FlipV;
 }
 
-#scene {
-    position: absolute;
-
-    width: 100%;
-    height: 100%;
-
-    background-color: gray;
+#canvas {
+    width: 640px;
+    height: 480px;
+    float: left;
 }
 
-#arrows {
-    padding-top: 8%;
-    position: absolute;
-
-    width: 100%;
-    height: 100%;
-
-    text-align: center;
-    color: #adff2f;
-
-    font: 8em "Georgia", "Apple Symbols", serif;
-    line-height: 1.1;
-
-    display: block;
-}
-
-#comp {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.1;
-}
-
-.thumb {
-    height: 200px;
-    vertical-align: middle;
-}
-
-#listOfThumbs {
-    display: table;
-}
-
-#strip {
+#camera {
+    width: 640px;
+    height: 480px;
+    float: right;
 }
 /* ==========================================================================
    Media Queries
