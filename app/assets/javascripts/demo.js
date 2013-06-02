@@ -56,8 +56,18 @@ DEMO.prototype.snapshot = function () {
 
 DEMO.prototype.draw = function (filtered) {
     if (filtered) {
+        var avg = this.weightCenter(filtered);
+        setPixel(filtered, avg.x, avg.y, 255, 0, 0, 255);
         this.context.putImageData(filtered, 0, 0);
     }
+};
+
+function setPixel(imageData, x, y, r, g, b, a) {
+    index = (x + y * imageData.width) * 4;
+    imageData.data[index+0] = r;
+    imageData.data[index+1] = g;
+    imageData.data[index+2] = b;
+    imageData.data[index+3] = a;
 };
 
 DEMO.prototype.filter = function (image) {
@@ -91,6 +101,32 @@ DEMO.prototype.filter = function (image) {
         this.oldImage = image;
         return image;
     }
+};
+
+DEMO.prototype.perPixel = function (image, fn) {
+    var data = image.data, i, x=0, y=0, w = image.width;
+    for(i = 0 ; i < data.length ; i+=4){
+        fn(x, y, data[i], data[i+1], data[i+2]);
+        x++;
+        if(x>=w){
+            x-=w;
+            y++;
+        }
+    }
+};
+
+DEMO.prototype.weightCenter = function (image) {
+    var xa=0, ya= 0, c=0;
+    this.perPixel(image, function(x, y, r, g, b){
+        if(r>100){
+            xa+=x;
+            ya+=y;
+            c++;
+        }
+    });
+    xa/=c;
+    ya/=c;
+    return {x: Math.floor(xa), y: Math.floor(ya)};
 };
 
 DEMO.prototype.createImage = function (imageSrc, imageDst) {
