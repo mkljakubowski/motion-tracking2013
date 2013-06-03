@@ -27,17 +27,23 @@
             <img src="${path}" class="thumb"></img>
         </script>
 
-        <center>
-            <video id="video" autoplay="true" style="display:none;"></video>
-            <canvas id="canvas" class="flip"></canvas>
-            <canvas id="camera" class="flip"></canvas>
-        </center>
+        <video id="video" autoplay="true" style="display:none;"></video>
+        <div id="wrapper">
+            <div id="upper">
+                <canvas id="canvas" class="flip"></canvas>
+                <canvas id="camera" class="flip"></canvas>
+            </div>
+            <div id="lower">
+                <canvas id="content"></canvas>
+            </div>
+        </div>
 
         <script src="@routes.Assets.at("javascripts/plugins.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/vendor/jquery.tmpl.min.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/vendor/cv.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/vendor/handtracking.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/vendor/jquery.ba-resize.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/vendor/easeljs-0.6.1.min.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/Gallery.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/Controls.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/demo.js")" type="text/javascript"></script>

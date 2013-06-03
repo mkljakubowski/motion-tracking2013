@@ -5,10 +5,16 @@ DEMO.prototype.start = function () {
     var that = this;
 
     this.video = document.getElementById("video");
+
     this.canvas = document.getElementById("canvas");
-    this.cameraCanvas = document.getElementById("camera");
+    this.canvas.height = $("#canvas").height();
+    this.canvas.width = $("#canvas").width();
     this.context = this.canvas.getContext("2d");
+    this.cameraCanvas = document.getElementById("camera");
+    this.cameraCanvas.height = $("#camera").height();
+    this.cameraCanvas.width = $("#camera").width();
     this.cameraCtx = this.cameraCanvas.getContext("2d");
+
     this.oldImage = undefined;
     this.oldFiltered = undefined;
 
@@ -57,12 +63,20 @@ DEMO.prototype.snapshot = function () {
 DEMO.prototype.draw = function (filtered) {
     if (filtered) {
         var avg = this.weightCenter(filtered);
-        setPixel(filtered, avg.x, avg.y, 255, 0, 0, 255);
+        this.drawCross(filtered, avg.x, avg.y, 255, 0, 0);
         this.context.putImageData(filtered, 0, 0);
     }
 };
 
-function setPixel(imageData, x, y, r, g, b, a) {
+DEMO.prototype.drawCross = function(imageData, x, y, r, g, b) {
+    this.setPixel(imageData, x, y, 255, 0, 0, 255);
+    this.setPixel(imageData, x-1, y, 255, 0, 0, 255);
+    this.setPixel(imageData, x+1, y, 255, 0, 0, 255);
+    this.setPixel(imageData, x, y-1, 255, 0, 0, 255);
+    this.setPixel(imageData, x, y+1, 255, 0, 0, 255);
+};
+
+DEMO.prototype.setPixel = function(imageData, x, y, r, g, b, a) {
     index = (x + y * imageData.width) * 4;
     imageData.data[index+0] = r;
     imageData.data[index+1] = g;

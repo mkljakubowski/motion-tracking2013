@@ -2,6 +2,17 @@ class Gallery
   constructor: ->
     @load()
     @selected = 0
+    @canvas = document.getElementById("content")
+    @canvas.height = $('#content').height()
+    @canvas.width = $('#content').width()
+    @ctx = @canvas.getContext("2d")
+    @imageCount = 0
+    @pictures = []
+    @stage = new createjs.Stage(@canvas)
+    @canvas.onmousemove = @onMouseMove
+    createjs.Ticker.addListener(@)
+    @pos = 0
+    @maxPos = 100
 
   load: ->
     par = @
@@ -9,48 +20,45 @@ class Gallery
       par.appendImages(data)
 
   appendImages: (paths) ->
-    s = @
-    for path in paths then do (path) =>
-      $("#thumbTmpl").tmpl({path: path}).appendTo("#listOfThumbs")
+    for path in paths then do =>
+      image = new Image()
+      image.src = path
+      image.onload = @imageLoaded
+      @pictures.push(image)
 
-    $("#listOfThumbs").resize () ->
-      x = $("#scene").width() / 2 - $("#listOfThumbs").width() / 2
-      y = $("#scene").height() / 2 - $("#listOfThumbs").height() / 2
-      s.setListOfThumbsPos(x, y)
+  onMouseMove: (e) ->
+    gallery.stage.mouseX = e.pageX - gallery.canvas.offsetLeft
+    gallery.stage.mouseY = e.pageY - gallery.canvas.offsetTop
 
-    $("#scene").resize () ->
-      x = $("#scene").width() / 2 - $("#listOfThumbs").width() / 2
-      y = $("#scene").height() / 2 - $("#listOfThumbs").height() / 2
-      s.setListOfThumbsPos(x, y)
+  imageLoaded: () ->
+    gallery.imageCount++
+    if (gallery.imageCount >= gallery.pictures.length)
+      gallery.createBitMaps()
 
-    @thumbs = $(".thumb")
-    @grow @selected
+  createBitMaps: () ->
+    x = 0
+    for i in [0..@pictures.length-1]
+      bitmap = new createjs.Bitmap(@pictures[i])
+      bitmap.x = x
+      bitmap.y = 0
+      bitmap.scaleX = @canvas.height / @pictures[i].height
+      bitmap.scaleY = @canvas.height / @pictures[i].height
+      x += (@canvas.height / @pictures[i].height * @pictures[i].width) + 10
+      @stage.addChild(bitmap)
+    @maxPos = x - @canvas.width
 
-  setListOfThumbsPos: (x, y) ->
-    $("#listOfThumbs").css("webkitTransform",  "translate("+x+"px,"+y+"px)")
-
-  grow: (i) ->
-    thumb = @thumbs[i]
-    $(thumb).height($("#scene").height() - 100)
-
-  shrink: (i) ->
-    thumb = @thumbs[i]
-    thumb.style.height = "200px"
-
-  next: ->
-    @shrink(@selected)
-    if @selected == @thumbs.length - 1
-      @selected = 0
-    else
-      @selected += 1
-    @grow(@selected)
-
-  prev: ->
-    @shrink(@selected)
-    if @selected == 0
-      @selected = @thumbs.length - 1
-    else
-      @selected -= 1
-    @grow(@selected)
+  tick: () ->
+    direction = -(gallery.stage.mouseX - (gallery.canvas.width / 2 ) ) / ((gallery.canvas.width / 2)/ 10)
+    if (@pos + direction > -@maxPos && @pos + direction < 0 )
+      @pos += direction
+    if (@pos + direction <= -@maxPos)
+      direction = -@pos - @maxPos
+      @pos = -@maxPos
+    if (@pos + direction >= 0)
+      direction = -@pos
+      @pos = 0
+    for i in [0..gallery.pictures.length-1]
+      gallery.stage.children[i].x = gallery.stage.children[i].x + direction
+    gallery.stage.tick()
 
 gallery = new Gallery
