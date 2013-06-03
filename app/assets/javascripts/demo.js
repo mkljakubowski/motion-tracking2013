@@ -62,6 +62,8 @@ DEMO.prototype.snapshot = function () {
 
 DEMO.prototype.draw = function (filtered) {
     if (filtered) {
+        this.blackBoreder(filtered);
+        this.dropSingle(filtered);
         var avg = this.weightCenter(filtered);
         this.drawCross(filtered, avg.x, avg.y, 255, 0, 0);
         this.context.putImageData(filtered, 0, 0);
@@ -77,11 +79,16 @@ DEMO.prototype.drawCross = function(imageData, x, y, r, g, b) {
 };
 
 DEMO.prototype.setPixel = function(imageData, x, y, r, g, b, a) {
-    index = (x + y * imageData.width) * 4;
+    var index = (x + y * imageData.width) * 4;
     imageData.data[index+0] = r;
     imageData.data[index+1] = g;
     imageData.data[index+2] = b;
     imageData.data[index+3] = a;
+};
+
+DEMO.prototype.getPixel = function(imageData, x, y) {
+    var index = (x + y * imageData.width) * 4;
+    return { r: imageData.data[index+0], g: imageData.data[index+1], b: imageData.data[index+2]};
 };
 
 DEMO.prototype.filter = function (image) {
@@ -120,13 +127,43 @@ DEMO.prototype.filter = function (image) {
 DEMO.prototype.perPixel = function (image, fn) {
     var data = image.data, i, x=0, y=0, w = image.width;
     for(i = 0 ; i < data.length ; i+=4){
-        fn(x, y, data[i], data[i+1], data[i+2]);
+        var ret = fn(x, y, data[i], data[i+1], data[i+2]);
+        if(ret !== undefined){
+            data[i] = ret.r;
+            data[i+1] = ret.g;
+            data[i+2] = ret.b;
+            data[i+3] = 255;
+        }
         x++;
         if(x>=w){
             x-=w;
             y++;
         }
     }
+};
+
+DEMO.prototype.blackBoreder = function(image){
+    this.perPixel(image, function(x, y, r, g, b){
+        if(x==0 || x==image.width-1 || y==0 || y==image.height-1){
+            return {r:0,g:0,b:0};
+        }else{
+            return {r:r,g:g,b:b};
+        }
+    });
+};
+
+DEMO.prototype.dropSingle = function(image){
+    var self = this;
+    this.perPixel(image, function(x, y, r, g, b){
+        if(x==0 || x==image.width-1 || y==0 || y==image.height-1){
+        }else{
+            if(r==255 && g==255 && b==255){
+                if(self.getPixel(image,x,y+1).r==0 && self.getPixel(image,x,y-1).r==0 && self.getPixel(image,x+1,y).r==0 && self.getPixel(image,x-1,y).r==0){
+                    return {r:0,g:0,b:0};
+                }
+            }
+        }
+    });
 };
 
 DEMO.prototype.weightCenter = function (image) {
