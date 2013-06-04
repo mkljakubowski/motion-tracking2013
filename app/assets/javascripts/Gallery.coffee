@@ -70,3 +70,11 @@ class Gallery
     gallery.stage.tick()
 
 gallery = new Gallery
+
+$('#flipInput').change () ->
+  if($('#flipInput').is(':checked'))
+    $('#canvas').addClass('flip')
+    $('#camera').addClass('flip')
+  else
+    $('#canvas').removeClass('flip')
+    $('#camera').removeClass('flip')
