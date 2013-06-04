@@ -91,6 +91,7 @@ textarea {
     width: 320px;
     height: 240px;
     float: right;
+    top: -320px;
 }
 
 #content {
@@ -108,7 +109,7 @@ textarea {
 #upper {
     position:absolute;
     height: 240px;
-    width: 100%
+    width: 100%;
 }
 
 #wrapper{
@@ -117,6 +118,22 @@ textarea {
     margin:0;
     padding:0;
 }
+
+#left {
+    float: left;
+}
+
+#middle{
+    float: left;
+    padding: 10px;
+    color: white;
+    text-align: left;
+}
+
+#right {
+    float: right;
+}
+
 /* ==========================================================================
    Media Queries
    ========================================================================== */

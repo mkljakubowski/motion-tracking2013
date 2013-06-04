@@ -28,7 +28,7 @@ class Gallery
       @pictures.push(image)
 
   onMouseMove: (e) ->
-    e = kalmanize(e)
+    e = kalmanize(e) if $('#kalman').is(':checked')
     gallery.stage.mouseX = e.pageX - gallery.camera.width/2
     gallery.stage.mouseY = e.pageY - gallery.camera.height/2
 #    gallery.stage.mouseX = e.pageX - gallery.canvas.offsetLeft
@@ -52,9 +52,11 @@ class Gallery
     @maxPos = x - @canvas.width
 
   tick: () ->
+    direction = 0
 #    direction = -(gallery.stage.mouseX - (gallery.canvas.width / 2 ) ) / ((gallery.canvas.width / 2)/ 10)
-    direction = -(gallery.stage.mouseX - (gallery.camera.width / 2 ) ) / ((gallery.camera.width / 2)/ 10) - 10
-    console.log(direction)
+    if(demo.ready)
+      direction = -(gallery.stage.mouseX - (gallery.camera.width / 2 ) ) / ((gallery.camera.width / 2)/ 10) - 10
+      direction *= 2
     if (@pos + direction > -@maxPos && @pos + direction < 0 )
       @pos += direction
     if (@pos + direction <= -@maxPos)

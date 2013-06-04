@@ -3,7 +3,6 @@ var DEMO = function () {
 
 DEMO.prototype.start = function () {
     var that = this;
-
     this.video = document.getElementById("video");
 
     this.canvas = document.getElementById("canvas");
@@ -33,6 +32,7 @@ DEMO.prototype.start = function () {
 };
 
 DEMO.prototype.videoReady = function (stream) {
+    this.ready = true;
     if (window.webkitURL) {
         this.video.src = window.webkitURL.createObjectURL(stream);
     } else {
@@ -205,6 +205,6 @@ DEMO.prototype.createImage = function (imageSrc, imageDst) {
 };
 
 window.onload = function () {
-    var demo = new DEMO();
+    demo = new DEMO();
     demo.start();
 };
