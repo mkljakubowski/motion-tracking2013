@@ -18,6 +18,8 @@ DEMO.prototype.start = function () {
     this.oldImage = undefined;
     this.oldFiltered = undefined;
 
+    this.pixelsToSwap = 1000;
+
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
     if (navigator.getUserMedia) {
         navigator.getUserMedia({video: true},
@@ -40,6 +42,11 @@ DEMO.prototype.videoReady = function (stream) {
 };
 
 DEMO.prototype.videoError = function (error) {
+    console.error("Video access refused!");
+};
+
+DEMO.prototype.moveTo = function (center) {
+    gallery.onMouseMove({pageX: center.x, pageY: center.Y});
 };
 
 DEMO.prototype.tick = function () {
@@ -67,6 +74,7 @@ DEMO.prototype.draw = function (filtered) {
         var avg = this.weightCenter(filtered);
         this.drawCross(filtered, avg.x, avg.y, 255, 0, 0);
         this.context.putImageData(filtered, 0, 0);
+        this.moveTo(avg);
     }
 };
 
@@ -112,7 +120,7 @@ DEMO.prototype.filter = function (image) {
             }
         }
         this.oldImage = image;
-        if(diff > 500 || !this.oldFiltered){
+        if(diff > this.pixelsToSwap || !this.oldFiltered){
             this.oldFiltered = output;
             return output;
         }else{

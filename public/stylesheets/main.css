@@ -82,14 +82,14 @@ textarea {
 }
 
 #canvas {
-    width: 300px;
-    height: 150px;
+    width: 320px;
+    height: 240px;
     float: left;
 }
 
 #camera {
-    width: 300px;
-    height: 150px;
+    width: 320px;
+    height: 240px;
     float: right;
 }
 
@@ -100,14 +100,14 @@ textarea {
 
 #lower {
     position:absolute;
-    top: 150px;
+    top: 240px;
     width: 100%;
     bottom:0px;
 }
 
 #upper {
     position:absolute;
-    height: 150px;
+    height: 240px;
     width: 100%
 }
 

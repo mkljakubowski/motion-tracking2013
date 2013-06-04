@@ -3,13 +3,14 @@ class Gallery
     @load()
     @selected = 0
     @canvas = document.getElementById("content")
+    @camera = document.getElementById("camera")
     @canvas.height = $('#content').height()
     @canvas.width = $('#content').width()
     @ctx = @canvas.getContext("2d")
     @imageCount = 0
     @pictures = []
     @stage = new createjs.Stage(@canvas)
-    @canvas.onmousemove = @onMouseMove
+#    @canvas.onmousemove = @onMouseMove
     createjs.Ticker.addListener(@)
     @pos = 0
     @maxPos = 100
@@ -27,8 +28,11 @@ class Gallery
       @pictures.push(image)
 
   onMouseMove: (e) ->
-    gallery.stage.mouseX = e.pageX - gallery.canvas.offsetLeft
-    gallery.stage.mouseY = e.pageY - gallery.canvas.offsetTop
+    e = kalmanize(e)
+    gallery.stage.mouseX = e.pageX - gallery.camera.width/2
+    gallery.stage.mouseY = e.pageY - gallery.camera.height/2
+#    gallery.stage.mouseX = e.pageX - gallery.canvas.offsetLeft
+#    gallery.stage.mouseY = e.pageY - gallery.canvas.offsetTop
 
   imageLoaded: () ->
     gallery.imageCount++
@@ -48,7 +52,9 @@ class Gallery
     @maxPos = x - @canvas.width
 
   tick: () ->
-    direction = -(gallery.stage.mouseX - (gallery.canvas.width / 2 ) ) / ((gallery.canvas.width / 2)/ 10)
+#    direction = -(gallery.stage.mouseX - (gallery.canvas.width / 2 ) ) / ((gallery.canvas.width / 2)/ 10)
+    direction = -(gallery.stage.mouseX - (gallery.camera.width / 2 ) ) / ((gallery.camera.width / 2)/ 10) - 10
+    console.log(direction)
     if (@pos + direction > -@maxPos && @pos + direction < 0 )
       @pos += direction
     if (@pos + direction <= -@maxPos)
