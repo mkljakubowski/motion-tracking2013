@@ -66,7 +66,8 @@ class Gallery
       direction = -@pos
       @pos = 0
     for i in [0..gallery.pictures.length-1]
-      gallery.stage.children[i].x = gallery.stage.children[i].x + direction
+      if gallery.stage.children[i]?
+       gallery.stage.children[i].x = gallery.stage.children[i].x + direction
     gallery.stage.tick()
 
 gallery = new Gallery
