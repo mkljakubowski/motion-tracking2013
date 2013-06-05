@@ -21,7 +21,7 @@ DEMO.prototype.start = function () {
 
     this.pixelsToSwap = 1000;
 
-    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
     if (navigator.getUserMedia) {
         navigator.getUserMedia({video: true},
             function (stream) {
