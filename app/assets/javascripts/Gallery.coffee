@@ -71,10 +71,18 @@ class Gallery
 
 gallery = new Gallery
 
-$('#flipInput').change () ->
-  if($('#flipInput').is(':checked'))
+$('#flipInputH').change () ->
+  if($('#flipInputH').is(':checked'))
     $('#canvas').addClass('flip')
     $('#camera').addClass('flip')
   else
     $('#canvas').removeClass('flip')
     $('#camera').removeClass('flip')
+
+$('#flipInputV').change () ->
+  if($('#flipInputV').is(':checked'))
+    $('#canvas').addClass('flipH')
+    $('#camera').addClass('flipH')
+  else
+    $('#canvas').removeClass('flipH')
+    $('#camera').removeClass('flipH')

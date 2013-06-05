@@ -13,6 +13,8 @@ DEMO.prototype.start = function () {
     this.cameraCanvas.height = $("#camera").height();
     this.cameraCanvas.width = $("#camera").width();
     this.cameraCtx = this.cameraCanvas.getContext("2d");
+    this.colorToSwap = 50;
+    $('#threshold').prop("value", this.colorToSwap);
 
     this.oldImage = undefined;
     this.oldFiltered = undefined;
@@ -106,7 +108,7 @@ DEMO.prototype.filter = function (image) {
             r = Math.abs(data[i] - this.oldImage.data[i]);
             g = Math.abs(data[i+1] - this.oldImage.data[i+1]);
             b = Math.abs(data[i+2] - this.oldImage.data[i+2]);
-            if (r + g + b > 50) {
+            if (r + g + b > this.colorToSwap) {
                 output.data[i] = 255;
                 output.data[i+1] = 255;
                 output.data[i+2] = 255;
@@ -208,3 +210,7 @@ window.onload = function () {
     demo = new DEMO();
     demo.start();
 };
+
+$('#threshold').change(function (){
+    demo.colorToSwap = parseInt($('#threshold').prop("value"));
+});

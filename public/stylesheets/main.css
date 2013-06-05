@@ -81,6 +81,14 @@ textarea {
     filter: FlipV;
 }
 
+.flipH {
+    -moz-transform: scale(-1, 1);
+    -webkit-transform: scale(-1, 1);
+    -o-transform: scale(-1, 1);
+    transform: scale(-1, 1);
+    filter: FlipH;
+}
+
 #canvas {
     width: 320px;
     height: 240px;

@@ -110,14 +110,6 @@ function kalmanize(e){
     x = x.add(K.x(y));
     P = I.subtract(K.x(H)).x(P);
 
-    // Draw our predicted point
-    var pSize = P.max() * 2000;
-    var pAlpha = 1 / pSize;
-    var canvas = document.getElementById('canvas');
-    var ctx = canvas.getContext('2d');
-    ctx.fillStyle = "rgba(0,0,255," +  pAlpha + ")";
-    ctx.fillRect(x.e(1, 1),x.e(2, 1), pSize, pSize); // x, y, width, height
-
     e.pageX = xMeasure;
     e.pageY = yMeasure;
     return e;

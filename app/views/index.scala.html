@@ -33,7 +33,9 @@
                 <div id="middle">
                     Webcam steered gallery with kalman filter<br>
                     <label><input type="checkbox" checked="true" id="kalman">kalman filter</label><br>
-                    <label><input type="checkbox" checked="true" id="flipInput">flip canvases</label>
+                    <label><input type="checkbox" checked="true" id="flipInputH">flip input horizontal</label><br>
+                    <label><input type="checkbox" id="flipInputV">flip input vertical</label><br>
+                    <label><input type="range" min="10" max="150" id="threshold">color threshold</label>
                 </div>
                 <div id="right"><canvas id="camera" class="flip"></canvas></div>
             </div>
